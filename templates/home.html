@@ -1,24 +1,70 @@
 {% extends "layout.html" %}
+{% block sidebar %}
+<div class="sticky-sidebar pt-2 pr-3">
+  <div class="sidebar-section">
+    <h3 class="mb-2 pb-2 fs-large">About the Site</h3>
+    <p class="fs-small">
+      Python Tips & Tricks is dedicated to providing high-quality advice for Python developers of all levels. From beginner basics to advanced asynchronous patterns, we strive to help you write cleaner, more efficient, and more professional code.
+    </p>
+  </div>
+
+  <div class="sidebar-section mt-5 pb-2">
+    <h3 class="mb-2 pb-2 fs-large">Categories</h3>
+    <ul class="tag-cloud d-flex flex-wrap gap-1">
+      <li class="fs-small tag"><a href="#">Python Basics</a></li>
+      <li class="fs-small tag"><a href="#">FastAPI</a></li>
+      <li class="fs-small tag"><a href="#">Data Science</a></li>
+      <li class="fs-small tag"><a href="#">DevOps</a></li>
+      <li class="fs-small tag"><a href="#">Web Dev</a></li>
+    </ul>
+  </div>
+
+  <div class="sidebar-section mt-5">
+    <h3 class="mb-2 pb-2 fs-large">Popular Tags</h3>
+    <div class="tag-cloud d-flex flex-wrap gap-1 pb-2">
+      <span class="tag">Tutorial</span>
+      <span class="tag">Tips</span>
+      <span class="tag">Asynchronous</span>
+      <span class="tag">SQLAlchemy</span>
+      <span class="tag">Deployment</span>
+      <span class="tag">Performance</span>
+    </div>
+  </div>
+
+  <div class="sidebar-section mt-5">
+    <h3 class="mb-2 pb-2 fs-large">Newsletter</h3>
+    <p class="fs-small mb-2">Get the latest Python tips directly in your inbox.</p>
+    <div class="newsletter-signup p-2">
+      <input type="email" placeholder="email@example.com" class="w-full mb-1 p-1">
+      <button class="w-full p-1 fw-semi-bold">Subscribe</button>
+    </div>
+  </div>
+
+</div>
+
+{% endblock sidebar %}
+
 {% block content %}
-  <h1>Home Page</h1>
-  <p>
-    Welcome to Python Tips & Tricks. Your one way stop for gaining valuable
-    skills using the Python programming language.
-  </p>
-  {% for post in posts %}
-    <article>
-      <div>
-        <div>
-          <div>
-            <a href="#">{{ post.author }}</a>
-            <small>{{ post.created_at | format_date("%B %d, %Y (%A)") }}</small>
-          </div>
-          <h2>
-            <a>{{ post.title }}</a>
-          </h2>
-          <p>{{ post.content }}</p>
+  <header class="mb-5">
+    <h1>Python Tips & Tricks</h1>
+    <p class="fs-base">
+      Gain valuable skills and stay up-to-date with current Python trends.
+    </p>
+  </header>
+
+  <div class="d-flex flex-column gap-4">
+    {% for post in posts %}
+      <article class="post-card p-4">
+        <div class="post-meta d-flex justify-content-between mb-2">
+          <span class="author">By <a href="#" class="fw-semi-bold">{{ post.author }}</a></span>
+          <span class="date">{{ post.created_at | format_date("%b %d, %Y") }}</span>
         </div>
-      </div>
-    </article>
-  {% endfor %}
+        <h2 class="post-title">
+          <a href="#">{{ post.title }}</a>
+        </h2>
+        <p class="post-excerpt">{{ post.content | truncate(200) }}</p>
+        <a href="#" class="read-more fw-semi-bold fs-base mt-3">Read article &rarr;</a>
+      </article>
+    {% endfor %}
+  </div>
 {% endblock content %}

@@ -48,14 +48,20 @@
     <link rel="icon" href="/static/icons/icon.png" type="image/png">
     <link rel="apple-touch-icon" href="/static/icons/icon.png">
   </head>
-  <body>
-    <header>
+  <body class="d-flex flex-column">
+    <header class="d-flex justify-content-between">
         {% block navbar %}
         {% endblock navbar %}
     </header>
-    <main>
-        {% block content %}
-        {% endblock content %}
+    <main class="grid-container">
+        <aside>
+            {% block sidebar %}
+            {% endblock sidebar %}
+        </aside>
+        <section>
+            {% block content %}
+            {% endblock content %}
+        </section>
     </main>
     <footer>
         {% block footer %}

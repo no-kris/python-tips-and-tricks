@@ -1,9 +1,16 @@
 :root {
   /* COLORS */
-  --primary-color: #527c9f;
-  --primary-dark: #3e5f7a;
-  --secondary-color: #4a5568;
-  --accent-color: #ed8936;
+  --color-bg-body: #fafafa;
+  --color-bg-content: #ffffff;
+  --color-text-primary: #333333;
+  --color-text-heading: #444444;
+  --color-text-gray: #777;
+  --color-steel: #527c9f;
+  --color-nav-link: #cbd5db;
+  --color-nav-link-hover: #ffffff;
+  --color-link-hover: #428bca;
+  --color-border: #dddddd;
+  --color-border-light: #e3e3e3;
 
   /* BACKGROUNDS */
   --bg-primary: #f8fafc;

@@ -1,3 +1,6 @@
+@import url("utils.css");
+@import url("variables.css");
+
 /* CSS RESETS */
 
 *,
@@ -9,6 +12,13 @@
 body {
   margin: 0;
   padding: 0;
+  font-family: var(--font-main);
+  background-color: var(--color-bg-body);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 ul,
@@ -21,13 +31,6 @@ ol {
 html {
   font-size: 62.5%; /* 1rem = 10px */
   scroll-behavior: smooth;
-}
-
-body {
-  min-height: 100vh;
-  text-rendering: optimizeSpeed;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -70,4 +73,92 @@ button {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--gap-6, 2.4rem);
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sticky-sidebar {
+  position: sticky;
+  top: 2rem;
+  align-self: start;
+}
+
+.sidebar-section:not(:last-child) {
+  color: var(--color-text-heading);
+  border-bottom: 2px solid var(--color-border-light);
+}
+
+.tag-cloud .tag {
+  background-color: var(--color-border-light);
+  padding: 0.4rem 0.8rem;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.tag-cloud .tag:hover {
+  background-color: var(--color-steel);
+  color: white;
+}
+
+.post-card {
+  background-color: var(--color-bg-content);
+  border-radius: var(--radius-sm, 0.8rem);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--color-border-light);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.post-meta {
+  font-size: 1.3rem;
+  color: var(--color-text-gray);
+}
+
+.post-title {
+  color: var(--color-text-heading);
+  margin: 1rem 0;
+}
+
+.post-title a:hover {
+  color: var(--color-link-hover);
+}
+
+.read-more {
+  display: inline-block;
+  color: var(--color-steel);
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+
+.newsletter-signup input {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.newsletter-signup button {
+  background: var(--color-steel);
+  color: white;
+  border-radius: var(--radius-sm);
 }
