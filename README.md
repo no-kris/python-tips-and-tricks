@@ -21,7 +21,3 @@ fastapi_blog/
 │   └── js/           # Client-side logic
 └── templates/        # Jinja2 HTML templates
 ```
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
