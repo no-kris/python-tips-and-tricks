@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1>Home Page</h1>
+  <p>
+    Welcome to Python Tips & Tricks. Your one way stop for gaining valuable
+    skills using the Python programming language.
+  </p>
+  {% for post in posts %}
+    <article>
+      <div>
+        <div>
+          <div>
+            <a href="#">{{ post.author }}</a>
+            <small>{{ post.created_at | format_date("%B %d, %Y (%A)") }}</small>
+          </div>
+          <h2>
+            <a>{{ post.title }}</a>
+          </h2>
+          <p>{{ post.content }}</p>
+        </div>
+      </div>
+    </article>
+  {% endfor %}
+{% endblock content %}

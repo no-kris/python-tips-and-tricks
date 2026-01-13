@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% if title %} 
+      Python Tips & Tricks - {{ title }} 
+      {% else %} 
+      Python Tips & Tricks 
+      {% endif %}
+    </title>
+    <meta name="description" content="Articles about Python programming tips">
+    <meta name="author" content="Kris">
+
+    <!-- Open Graph Tags: The title of the page for social media sharing. -->
+    <meta property="og:title" content="Python Tips & Tricks">
+
+    <!-- Open Graph Tags: Type of content the website displays. -->
+    <meta property="og:type" content="website">
+
+    <!-- Open Graph Tags: The URL of the page. -->
+    <meta property="og:url" content="{{ request.url }}">
+
+    <!-- Open Graph Tags: URL of an image that represents the page. -->
+    <meta property="og:image" content="{{ request.url_for('static', path='icons/icon.png') }}">
+
+    <!-- Open Graph Tags: Provides an alternative text for the image. -->
+    <meta property="og:image:alt" content="Python Tips & Tricks Logo">
+
+    <!-- Preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Custom Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+          rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+
+    <!-- Set a theme color that matches your website's primary color -->
+    <meta name="theme-color" content="#527c9f">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/static/icons/icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/static/icons/icon.png">
+  </head>
+  <body>
+    <header>
+        {% block navbar %}
+        {% endblock navbar %}
+    </header>
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+    <footer>
+        {% block footer %}
+        {% endblock footer %}
+    </footer>
+  </body>
+</html>
