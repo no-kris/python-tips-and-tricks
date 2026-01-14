@@ -77,11 +77,10 @@ button {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 3fr;
   gap: var(--gap-6, 2.4rem);
   max-width: 120rem;
   margin: 0 auto;
-  padding: 0 2rem;
 }
 
 @media (max-width: 768px) {
@@ -90,15 +89,31 @@ button {
   }
 }
 
-.sticky-sidebar {
-  position: sticky;
-  top: 2rem;
-  align-self: start;
+.sidebar {
+  height: 100%;
+  width: 20%;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 2rem;
+  background-color: var(--bg-secondary);
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.main-content {
+  margin-left: calc(20% + 2rem);
+  padding: 15px;
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .sidebar-section:not(:last-child) {
-  color: var(--color-text-heading);
-  border-bottom: 2px solid var(--color-border-light);
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .tag-cloud .tag {
@@ -117,26 +132,47 @@ button {
 }
 
 .post-card {
-  background-color: var(--color-bg-content);
-  border-radius: var(--radius-sm, 0.8rem);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--color-border-light);
-  transition: transform 0.2s, box-shadow 0.2s;
+  background: var(--color-bg-content);
+  border-radius: var(--radius-lg, 1.2rem);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  transition: transform var(--transition-normal),
+    box-shadow var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.post-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 6px;
+  background-color: var(--color-steel);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
 }
 
 .post-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.post-card:hover::before {
+  opacity: 1;
 }
 
 .post-meta {
-  font-size: 1.3rem;
-  color: var(--color-text-gray);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .post-title {
-  color: var(--color-text-heading);
-  margin: 1rem 0;
+  color: var(--text-primary);
+  margin: 1.2rem 0;
+  line-height: 1.3;
 }
 
 .post-title a:hover {
@@ -144,12 +180,16 @@ button {
 }
 
 .read-more {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   color: var(--color-steel);
+  transition: gap var(--transition-fast);
 }
 
 .read-more:hover {
   text-decoration: underline;
+  gap: 0.8rem;
 }
 
 .newsletter-signup input {

@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block sidebar %}
-<div class="sticky-sidebar pt-2 pr-3">
+<div class="pr-3">
   <div class="sidebar-section">
     <h3 class="mb-2 pb-2 fs-large">About the Site</h3>
     <p class="fs-small">
@@ -13,8 +13,10 @@
     <ul class="tag-cloud d-flex flex-wrap gap-1">
       <li class="fs-small tag"><a href="#">Python Basics</a></li>
       <li class="fs-small tag"><a href="#">FastAPI</a></li>
+      <li class="fs-small tag"><a href="#">Flask</a></li>
       <li class="fs-small tag"><a href="#">Data Science</a></li>
       <li class="fs-small tag"><a href="#">DevOps</a></li>
+      <li class="fs-small tag"><a href="#">Django</a></li>
       <li class="fs-small tag"><a href="#">Web Dev</a></li>
     </ul>
   </div>
@@ -52,17 +54,17 @@
     </p>
   </header>
 
-  <div class="d-flex flex-column gap-4">
+  <div class="d-flex flex-column gap-4 mb-5">
     {% for post in posts %}
       <article class="post-card p-4">
-        <div class="post-meta d-flex justify-content-between mb-2">
-          <span class="author">By <a href="#" class="fw-semi-bold">{{ post.author }}</a></span>
+        <div class="post-meta fs-small fw-semi-bold d-flex justify-content-between mb-2">
+          <span class="author">By <a href="#">{{ post.author }}</a></span>
           <span class="date">{{ post.created_at | format_date("%b %d, %Y") }}</span>
         </div>
-        <h2 class="post-title">
+        <h2 class="post-title fw-bold fs-large">
           <a href="#">{{ post.title }}</a>
         </h2>
-        <p class="post-excerpt">{{ post.content | truncate(200) }}</p>
+        <p class="post-excerpt fs-small">{{ post.content | truncate(200) }}</p>
         <a href="#" class="read-more fw-semi-bold fs-base mt-3">Read article &rarr;</a>
       </article>
     {% endfor %}
