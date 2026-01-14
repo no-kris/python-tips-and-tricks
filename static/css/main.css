@@ -18,6 +18,7 @@ body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -75,35 +76,18 @@ button {
   }
 }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  gap: var(--gap-6, 2.4rem);
-  max-width: 120rem;
-  margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-  .grid-container {
-    grid-template-columns: 1fr;
-  }
-}
+/* SIDEBAR CSS */
 
 .sidebar {
-  height: 100%;
   width: 20%;
   position: fixed;
   z-index: 10;
+  left: 0;
   top: 0;
-  left: 2rem;
+  bottom: 0;
   background-color: var(--bg-secondary);
   overflow-x: hidden;
-  padding-top: 20px;
-}
-
-.main-content {
-  margin-left: calc(20% + 2rem);
-  padding: 15px;
+  box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.4);
 }
 
 .sidebar::-webkit-scrollbar {
@@ -111,8 +95,6 @@ button {
 }
 
 .sidebar-section:not(:last-child) {
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -129,6 +111,26 @@ button {
 .tag-cloud .tag:hover {
   background-color: var(--color-steel);
   color: white;
+}
+
+.newsletter-signup input {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.newsletter-signup button {
+  background: var(--color-steel);
+  color: white;
+  border-radius: var(--radius-sm);
+}
+
+/* MAIN CONTENT */
+
+.main-content {
+  margin-left: 20%;
+  margin-top: var(--nav-offset);
+  overflow-y: auto;
+  height: calc(100vh - var(--nav-offset));
 }
 
 .post-card {
@@ -189,16 +191,69 @@ button {
 
 .read-more:hover {
   text-decoration: underline;
-  gap: 0.8rem;
+  text-underline-offset: 0.8rem;
 }
 
-.newsletter-signup input {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+/* NAVBAR CSS */
+
+header {
+  position: relative;
 }
 
-.newsletter-signup button {
+.navbar {
+  color: var(--color-nav-link);
   background: var(--color-steel);
-  color: white;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 2.5rem;
+  margin: 0.5rem auto;
+  width: 75%;
+  position: fixed;
+  top: 0;
+  left: 20%;
+  right: 0;
+  z-index: 9999;
+}
+
+.navbar-nav {
+  transition: all 0.2s ease-in-out;
+}
+
+.navbar-link {
+  text-decoration: none;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.navbar-link:hover {
+  color: var(--color-nav-link-hover);
+}
+
+.navbar-link::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--color-nav-link-hover);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.navbar-link:hover::before {
+  transform: scaleX(1);
+}
+
+.navbar-btn {
+  border: 1px solid var(--color-bg-body);
+  color: var(--color-bg-body);
   border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.navbar-btn:hover {
+  background-color: var(--color-bg-body);
+  color: var(--color-steel);
+  cursor: pointer;
 }

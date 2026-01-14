@@ -1,7 +1,7 @@
 :root {
   /* COLORS */
-  --color-bg-body: #dedede;
-  --color-bg-content: #bcbcbc;
+  --color-bg-body: #fafafa;
+  --color-bg-content: #ffffff;
   --color-text-primary: #333333;
   --color-text-heading: #444444;
   --color-text-gray: #777;
@@ -46,4 +46,6 @@
   /* TRANSITIONS */
   --transition-fast: 150ms ease;
   --transition-normal: 250ms ease;
+
+  --nav-offset: 7rem;
 }
