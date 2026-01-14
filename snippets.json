@@ -5,7 +5,9 @@
     "content": "FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.8+ based on standard Python type hints.",
     "author": "Alice",
     "published": true,
-    "created_at": "2024-01-10T12:00:00"
+    "created_at": "2024-01-10T12:00:00",
+    "categories": "FastAPI",
+    "tags": ["Tips", "Tutorial"]
   },
   {
     "id": 2,
@@ -13,7 +15,9 @@
     "content": "Python type hints are a way to specify the type of a variable, function parameter, or return value.",
     "author": "Bob",
     "published": true,
-    "created_at": "2024-01-11T14:30:00"
+    "created_at": "2024-01-11T14:30:00",
+    "categories": "Python Basics",
+    "tags": ["Tips", "Tutorial"]
   },
   {
     "id": 3,
@@ -21,7 +25,9 @@
     "content": "Asyncio is a library to write concurrent code using the async/await syntax.",
     "author": "Charlie",
     "published": false,
-    "created_at": "2024-01-12T09:15:00"
+    "created_at": "2024-01-12T09:15:00",
+    "categories": "FastAPI",
+    "tags": ["Asynchronous", "Tutorial"]
   },
   {
     "id": 4,
@@ -29,6 +35,8 @@
     "content": "FastAPI has a very powerful Dependency Injection system, which is very easy to use.",
     "author": "Alice",
     "published": true,
-    "created_at": "2024-01-12T13:45:00"
+    "created_at": "2024-01-12T13:45:00",
+    "categories": "FastAPI",
+    "tags": ["Tips", "Tutorial", "Performance"]
   }
 ]
