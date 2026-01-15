@@ -9,6 +9,15 @@
   </div>
 
   <div class="sidebar-section mt-5 pb-2">
+    <h3 class="mb-2 pb-2 fs-large">Skill Level</h3>
+    <ul class="tag-cloud d-flex flex-wrap gap-1">
+      <li class="fs-small tag">Beginner</li>
+      <li class="fs-small tag">Intermediate</li>
+      <li class="fs-small tag">Advanced</li>
+    </ul>
+  </div>
+
+  <div class="sidebar-section mt-5 pb-2">
     <h3 class="mb-2 pb-2 fs-large">Categories</h3>
     <ul class="tag-cloud d-flex flex-wrap gap-1">
       <li class="fs-small tag"><a href="#">Python Basics</a></li>
@@ -60,7 +69,7 @@
           <span class="date">{{ post.created_at | format_date("%b %d, %Y") }}</span>
         </div>
         <h2 class="post-title fw-bold fs-large">
-          <a href="#">{{ post.title }}</a>
+          <a href="#">{{ post.title }}</a><span class="ml-2 fs-base fw-normal" style="color: lightslategrey;">( {{ post.level }} )</span>
         </h2>
         <p class="post-excerpt fs-small">{{ post.content | truncate(200) }}</p>
         <a href="#" class="read-more fw-semi-bold fs-base mt-3">Read article &rarr;</a>

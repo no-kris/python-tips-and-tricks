@@ -6,6 +6,7 @@
     "author": "Alice",
     "published": true,
     "created_at": "2024-01-10T12:00:00",
+    "level": "Intermediate",
     "categories": "FastAPI",
     "tags": ["Tips", "Tutorial"]
   },
@@ -16,6 +17,7 @@
     "author": "Bob",
     "published": true,
     "created_at": "2024-01-11T14:30:00",
+    "level": "Beginner",
     "categories": "Python Basics",
     "tags": ["Tips", "Tutorial"]
   },
@@ -26,6 +28,7 @@
     "author": "Charlie",
     "published": false,
     "created_at": "2024-01-12T09:15:00",
+    "level": "Advanced",
     "categories": "FastAPI",
     "tags": ["Asynchronous", "Tutorial"]
   },
@@ -36,6 +39,7 @@
     "author": "Alice",
     "published": true,
     "created_at": "2024-01-12T13:45:00",
+    "level": "Intermediate",
     "categories": "FastAPI",
     "tags": ["Tips", "Tutorial", "Performance"]
   }
