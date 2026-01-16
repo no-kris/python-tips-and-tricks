@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% include "navbar.html" %}
+    <article class="post-container">
+        <div class="d-flex flex-column">
+            <div>
+                <div class="post-meta fw-semi-bold d-flex justify-content-between mb-2">
+                    <span class="author fs-base">Post created by {{ post.author }}</span>
+                    <span class="date">{{ post.created_at | format_date("%b %d, %Y") }}</span>
+                </div>
+                <span class="post-title fw-bold fs-3x">{{ post.title }}</span>
+                <p class="post-content fs-base mb-6">{{ post.content }}</p>
+                <div class="post-actions d-flex gap-3 fs-base mt-4 pt-4">
+                    <a class="btn-action btn-edit">Edit Post</a>
+                    <button class="btn-action btn-delete">Delete</button>
+                </div>
+            </div>
+        </div>
+    </article>
+{% endblock content %}

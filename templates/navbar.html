@@ -1,20 +1,22 @@
-<div class="d-flex justify-content-between align-items-center">
-    <div class="d-flex gap-6">
-        <!-- LEFT SIDE -->
-        <span class="fs-base">Python Tips & Tricks</span>
-        <div class="navbar-nav">
-            <a class="navbar-link fs-base" href="{{ url_for('home') }}">Home</a>
-        </div>
-    </div>  
-    <button class="navbar-toggler">
-    <span class="navbar-toggler-icon"></span>
-    </button>
+<nav class="navbar">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex gap-6">
+            <!-- LEFT SIDE -->
+            <span class="fs-base">Python Tips & Tricks</span>
+            <div class="navbar-nav">
+                <a class="navbar-link fs-base" href="{{ url_for('home') }}">Home</a>
+            </div>
+        </div>  
+        <button class="navbar-toggler">
+        <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse">
-        <!-- RIGHT SIDE -->
-        <div class="navbar-nav d-flex gap-4 fs-base">
-            <a class="navbar-btn px-2 py-1" href="#">Login</a>
-            <a class="navbar-btn px-2 py-1" href="#">Register</a>
+        <div class="collapse navbar-collapse">
+            <!-- RIGHT SIDE -->
+            <div class="navbar-nav d-flex gap-4 fs-base">
+                <a class="navbar-btn px-2 py-1" href="#">Login</a>
+                <a class="navbar-btn px-2 py-1" href="#">Register</a>
+            </div>
         </div>
     </div>
-</div>
+</nav>

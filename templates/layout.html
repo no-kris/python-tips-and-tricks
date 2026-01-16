@@ -49,21 +49,15 @@
     <link rel="apple-touch-icon" href="{{ url_for('static', path='icons/icon.png') }}">
   </head>
   <body>
-    <header>
-      <nav class="navbar">
-        {% include "navbar.html" %}
-      </nav>
-    </header>
     <main class="d-flex flex-column">
-        <aside class="sidebar px-2">
-            {% block sidebar %}
-            {% endblock sidebar %}
-        </aside>
+      {% block error %}{% endblock error %}
+        
         <section class="main-content px-6">
             {% block content %}
             {% endblock content %}
         </section>
     </main>
+
     <footer>
         {% block footer %}
         {% endblock footer %}

@@ -76,6 +76,12 @@ button {
   }
 }
 
+.center-screen {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+}
+
 /* SIDEBAR CSS */
 
 .sidebar {
@@ -392,4 +398,54 @@ header {
   .navbar-toggler-icon::after {
     bottom: -8px;
   }
+}
+
+/* ARTICLE VIEW (Sleek Redesign) */
+
+.post-container {
+  margin: 0 auto;
+  padding: 2rem 0 8rem;
+}
+
+.post-article .post-content {
+  line-height: 1.75;
+  color: var(--color-text-primary);
+  font-family: var(--font-main);
+}
+
+.post-article .post-actions {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--color-border);
+}
+
+.btn-action {
+  padding: 1rem 2rem;
+  border-radius: var(--radius-sm);
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-edit {
+  border: 1px solid var(--color-border);
+  background: white;
+  color: var(--color-text-primary);
+}
+
+.btn-edit:hover {
+  background: var(--color-bg-sidebar);
+  border-color: var(--color-accent);
+}
+
+.btn-delete {
+  background: transparent;
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.btn-delete:hover {
+  color: #991b1b;
 }

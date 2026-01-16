@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block error %}
+<div class="center-screen">
+    <div class="d-flex flex-column justify-content-center align-items-center gap-3">
+        <h1 class="fs-large fw-bold">
+            Oops... I got an error {{ status_code }}
+        </h1>
+        <p class="fs-base">{{ message }}</p>
+        <a class="fs-base" style="text-decoration: underline wavy;" href="{{ url_for('home') }}">Take Me Back Home</a>
+    </div>
+</div>
+
+{% endblock error %}
