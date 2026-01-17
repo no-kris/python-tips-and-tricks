@@ -22,7 +22,14 @@
         <h2 class="post-title fw-bold fs-large">
           <a href="{{ url_for('post_page', post_id=post.id) }}">{{ post.title }}</a><span class="ml-2 fs-base fw-normal" style="color: lightslategrey;">( {{ post.level }} )</span>
         </h2>
-        <p class="post-excerpt fs-small">{{ post.content | truncate(200) }}</p>
+        <div>
+          <p class="post-excerpt fs-small">{{ post.content | truncate(200) }}</p>
+          <div class="d-flex gap-3">
+          {% for tag in post.tags %}
+            <span class="fs-small" style="color: lightslategrey;">#{{ tag }}</span>
+          {% endfor %}
+          </div>
+        </div>
         <a href="{{ url_for('post_page', post_id=post.id) }}" class="read-more fw-semi-bold fs-base mt-3">Read article &rarr;</a>
       </article>
     {% endfor %}
