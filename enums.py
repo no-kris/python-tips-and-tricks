@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Level(str, Enum):
     """Defines the experience level given to a post."""
 
@@ -17,6 +18,7 @@ class Category(str, Enum):
     DJANGO = "Django"
     DATA_SCIENCE = "Data Science"
     WEB_DEV = "Web Dev"
+
 
 class Tags(str, Enum):
     """Defines a tags a post can have. Each post can have multiple tags."""

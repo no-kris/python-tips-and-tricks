@@ -9,9 +9,12 @@ class UserBase(BaseModel):
     username: str = Field(min_length=2, max_length=50)
     email: EmailStr = Field(max_length=120)
 
+
 class UserCreate(UserBase):
     """Defines the data needed to create a new user."""
+
     pass
+
 
 class UserResponse(UserBase):
     """Defines the response data returned for a user."""
@@ -25,7 +28,6 @@ class PostBase(BaseModel):
 
     title: str = Field(min_length=2, max_length=50)
     content: str = Field(min_length=2)
-    author: str = Field(min_length=2, max_length=50)
 
 
 class PostCreate(PostBase):
@@ -34,6 +36,7 @@ class PostCreate(PostBase):
     level: Level
     category: Category
     tags: list[Tags]
+    user_id: int  # Testing purpose
 
 
 class PostResponse(PostBase):
@@ -41,6 +44,8 @@ class PostResponse(PostBase):
 
     model_config = ConfigDict(from_attributes=True)
     id: int
+    user_id: int
+    author: UserResponse
     created_at: datetime
     published: bool = True
     level: Level

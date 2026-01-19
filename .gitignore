@@ -11,3 +11,7 @@ wheels/
 
 # vscode settings
 .vscode
+
+.ruff_cache
+
+*.db
