@@ -5,8 +5,8 @@
         <div class="d-flex flex-column">
             <div>
                 <div class="post-meta fw-semi-bold d-flex justify-content-between mb-2">
-                    <span class="author fs-base">Post created by {{ post.author }}</span>
-                    <span class="date">{{ post.created_at | format_date("%b %d, %Y") }}</span>
+                    <span class="author fs-base">Post created by {{ post.author.username }}</span>
+                    <span class="date">{{ post.created_at.strftime("%B %d, %Y (%A)") }}</span>
                 </div>
                 <span class="post-title fw-bold fs-3x">{{ post.title }}</span>
                 <p class="post-content fs-base mb-6">{{ post.content }}</p>
