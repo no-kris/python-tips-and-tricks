@@ -11,7 +11,14 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 import models
 from database import Base, engine, get_db
-from schemas import PostCreate, PostResponse, PostUpdate, UserCreate, UserResponse
+from schemas import (
+    PostCreate,
+    PostResponse,
+    PostUpdate,
+    UserCreate,
+    UserResponse,
+    UserUpdate,
+)
 from utils import format_date, get_db_tags, seed_tags
 
 Base.metadata.create_all(bind=engine)
@@ -83,6 +90,42 @@ def get_user_posts(user_id: int, db: Annotated[Session, Depends(get_db)]):
     result = db.execute(select(models.Post).where(models.Post.user_id == user_id))
     posts = result.scalars().all()
     return posts
+
+
+@app.patch("/api/user/{user_id}")
+def update_user(
+    user_id: int, user_update: UserUpdate, db: Annotated[Session, Depends(get_db)]
+):
+    result = db.execute(select(models.User).where(models.User.id == user_id))
+    user = result.scalars().first()
+    if not user:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not found.")
+    # Check if username is not empty and it's not already taken,
+    if user_update.username is not None and user_update.username != user.username:
+        result = db.execute(
+            select(models.User).where(models.User.username == user_update.username)
+        )
+        existing_user = result.scalars().first()
+        if existing_user:
+            raise HTTPException(
+                status.HTTP_400_BAD_REQUEST, detail="Username already taken."
+            )
+    # Check if email is not empty and that it's not already in use.
+    if user_update.email is not None and user_update.email != user.email:
+        result = db.execute(
+            select(models.User).where(models.User.email == user_update.email)
+        )
+        existing_email = result.scalars().first()
+        if existing_email:
+            raise HTTPException(
+                status.HTTP_400_BAD_REQUEST, detail="Email is already in use."
+            )
+    update_data = user_update.model_dump(exclude_unset=True)
+    for field, value in update_data.items():
+        setattr(user, field, value)
+    db.commit()
+    db.refresh(user)
+    return user
 
 
 @app.get("/api/posts/{post_id}", response_model=PostResponse)

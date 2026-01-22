@@ -25,7 +25,7 @@ class UserResponse(UserBase):
     id: int
 
 
-class UserUpate(BaseModel):
+class UserUpdate(BaseModel):
     """Update (optional) fields for user data."""
 
     username: str | None = Field(default=None, min_length=2, max_length=50)
