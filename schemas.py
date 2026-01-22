@@ -25,6 +25,13 @@ class UserResponse(UserBase):
     id: int
 
 
+class UserUpate(BaseModel):
+    """Update (optional) fields for user data."""
+
+    username: str | None = Field(default=None, min_length=2, max_length=50)
+    email: EmailStr | None = Field(default=None, max_length=120)
+
+
 class PostBase(BaseModel):
     """Base post model. Shared between creating and returning post data."""
 
@@ -46,6 +53,7 @@ class PostUpdate(BaseModel):
 
     title: str | None = Field(default=None, min_length=2, max_length=100)
     content: str | None = Field(default=None, min_length=2)
+    level: Level | None
 
 
 class PostResponse(PostBase):
