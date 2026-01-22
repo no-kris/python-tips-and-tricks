@@ -11,7 +11,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 import models
 from database import Base, engine, get_db
-from schemas import PostCreate, PostResponse, UserCreate, UserResponse
+from schemas import PostCreate, PostResponse, PostUpdate, UserCreate, UserResponse
 from utils import format_date, get_db_tags, seed_tags
 
 Base.metadata.create_all(bind=engine)
@@ -116,6 +116,22 @@ def update_post_full(
     post.level = post_data.level.value
     post.category = post_data.category.value
     post.tags = get_db_tags(db, post_data.tags)
+    db.commit()
+    db.refresh(post)
+    return post
+
+
+@app.patch("/api/posts/{post_id}")
+def update_post_partial(
+    post_id: int, post_data: PostUpdate, db: Annotated[Session, Depends(get_db)]
+):
+    result = db.execute(select(models.Post).where(models.Post.id == post_id))
+    post = result.scalars().first()
+    if not post:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Post not found.")
+    update_data = post_data.model_dump(exclude_unset=True)
+    for field, value in update_data.items():
+        setattr(post, field, value)
     db.commit()
     db.refresh(post)
     return post
