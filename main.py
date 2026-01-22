@@ -12,7 +12,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 import models
 from database import Base, engine, get_db
 from schemas import PostCreate, PostResponse, UserCreate, UserResponse
-from utils import format_date, seed_tags
+from utils import format_date, get_db_tags, seed_tags
 
 Base.metadata.create_all(bind=engine)
 with next(get_db()) as db:
@@ -94,6 +94,33 @@ def get_post(post_id: int, db: Annotated[Session, Depends(get_db)]):
     raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Post not found.")
 
 
+@app.put("/api/posts/{post_id}")
+def update_post_full(
+    post_id: int, post_data: PostCreate, db: Annotated[Session, Depends(get_db)]
+):
+    result = db.execute(select(models.Post).where(models.Post.id == post_id))
+    post = result.scalars().first()
+    if not post:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Post not found.")
+    # Make sure it's the correct user updating the post.
+    if post_data.user_id != post.user_id:
+        result = db.execute(
+            select(models.User).where(models.User.id == post_data.user_id)
+        )
+        user = result.scalars().first()
+        if not user:
+            raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not found.")
+    post.title = post_data.title
+    post.content = post_data.content
+    post.user_id = post_data.user_id
+    post.level = post_data.level.value
+    post.category = post_data.category.value
+    post.tags = get_db_tags(db, post_data.tags)
+    db.commit()
+    db.refresh(post)
+    return post
+
+
 @app.post(
     "/api/users", response_model=UserResponse, status_code=status.HTTP_201_CREATED
 )
@@ -133,22 +160,13 @@ def create_post(post: PostCreate, db: Annotated[Session, Depends(get_db)]):
     if not user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not found.")
 
-    # Fetch tags from db
-    db_tags = []
-    for tag_enum in post.tags:
-        tag_name = tag_enum.value.lower()
-        tag_result = db.execute(select(models.Tag).where(models.Tag.name == tag_name))
-        db_tag = tag_result.scalars().first()
-        if db_tag:
-            db_tags.append(db_tag)
-
     new_post = models.Post(
         title=post.title,
         content=post.content,
         level=post.level.value,
         category=post.category.value,
         user_id=post.user_id,
-        tags=db_tags,
+        tags=get_db_tags(db, post.tags),
     )
     db.add(new_post)
     db.commit()

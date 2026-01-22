@@ -23,3 +23,15 @@ def seed_tags(db: Session):
         if not result.scalars().first():
             db.add(models.Tag(name=tag_name))
     db.commit()
+
+
+def get_db_tags(db: Session, tag_enums: list[Tags]) -> list[models.Tag]:
+    """Fetches models.Tag instances from the database based on a list of Tags enums."""
+    db_tags = []
+    for tag_enum in tag_enums:
+        tag_name = tag_enum.value
+        tag_result = db.execute(select(models.Tag).where(models.Tag.name == tag_name))
+        db_tag = tag_result.scalars().first()
+        if db_tag:
+            db_tags.append(db_tag)
+    return db_tags

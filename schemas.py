@@ -1,6 +1,8 @@
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, EmailStr
-from enums import Level, Category, Tags
+
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
+
+from enums import Category, Level, Tags
 
 
 class UserBase(BaseModel):
@@ -39,6 +41,13 @@ class PostCreate(PostBase):
     user_id: int  # Testing purpose
 
 
+class PostUpdate(BaseModel):
+    """Update (optional) fields for a post object."""
+
+    title: str | None = Field(default=None, min_length=2, max_length=100)
+    content: str | None = Field(default=None, min_length=2)
+
+
 class PostResponse(PostBase):
     """Defines the post data returned by the api."""
 
@@ -51,3 +60,14 @@ class PostResponse(PostBase):
     level: Level
     category: Category
     tags: list[Tags]
+
+    @field_validator("tags", mode="before")
+    @classmethod
+    def transform_tags(cls, value):
+        if (
+            isinstance(value, list)
+            and len(value) > 0
+            and not isinstance(value[0], Tags)
+        ):
+            return [Tags(tag.name) for tag in value]
+        return value
