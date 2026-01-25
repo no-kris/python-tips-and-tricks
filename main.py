@@ -51,7 +51,9 @@ templates.env.filters["format_date"] = format_date
 @app.get("/posts", include_in_schema=False, name="posts")
 async def home(request: Request, db: Annotated[AsyncSession, Depends(get_db)]):
     result = await db.execute(
-        select(models.Post).options(selectinload(models.Post.author))
+        select(models.Post).options(
+            selectinload(models.Post.author), selectinload(models.Post.tags)
+        )
     )
     posts = result.scalars().all()
     return templates.TemplateResponse(
@@ -69,7 +71,7 @@ async def user_posts_page(
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not found.")
     result = await db.execute(
         select(models.Post)
-        .options(selectinload(models.Post.author))
+        .options(selectinload(models.Post.author), selectinload(models.Post.tags))
         .where(models.Post.user_id == user_id)
     )
     posts = result.scalars().all()
@@ -86,7 +88,7 @@ async def post_page(
 ):
     result = await db.execute(
         select(models.Post)
-        .options(selectinload(models.Post.author))
+        .options(selectinload(models.Post.author), selectinload(models.Post.tags))
         .where(models.Post.id == post_id)
     )
     post = result.scalars().first()
@@ -115,7 +117,7 @@ async def get_user_posts(user_id: int, db: Annotated[AsyncSession, Depends(get_d
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not found.")
     result = await db.execute(
         select(models.Post)
-        .options(selectinload(models.Post.author))
+        .options(selectinload(models.Post.author), selectinload(models.Post.tags))
         .where(models.Post.user_id == user_id)
     )
     posts = result.scalars().all()
@@ -172,7 +174,7 @@ async def delete_user(user_id: int, db: Annotated[AsyncSession, Depends(get_db)]
 async def get_post(post_id: int, db: Annotated[AsyncSession, Depends(get_db)]):
     result = await db.execute(
         select(models.Post)
-        .options(selectinload(models.Post.author))
+        .options(selectinload(models.Post.author), selectinload(models.Post.tags))
         .where(models.Post.id == post_id)
     )
     post = result.scalars().first()
@@ -187,7 +189,7 @@ async def update_post_full(
 ):
     result = await db.execute(
         select(models.Post)
-        .options(selectinload(models.Post.author))
+        .options(selectinload(models.Post.author), selectinload(models.Post.tags))
         .where(models.Post.id == post_id)
     )
     post = result.scalars().first()
@@ -208,7 +210,7 @@ async def update_post_full(
     post.category = post_data.category.value
     post.tags = await get_db_tags(db, post_data.tags)
     await db.commit()
-    await db.refresh(post, attribute_names=["author"])
+    await db.refresh(post, attribute_names=["author", "tags"])
     return post
 
 
@@ -218,7 +220,7 @@ async def update_post_partial(
 ):
     result = await db.execute(
         select(models.Post)
-        .options(selectinload(models.Post.author))
+        .options(selectinload(models.Post.author), selectinload(models.Post.tags))
         .where(models.Post.id == post_id)
     )
     post = result.scalars().first()
@@ -228,7 +230,7 @@ async def update_post_partial(
     for field, value in update_data.items():
         setattr(post, field, value)
     await db.commit()
-    await db.refresh(post, attribute_names=["author"])
+    await db.refresh(post, attribute_names=["author", "tags"])
     return post
 
 
@@ -236,7 +238,7 @@ async def update_post_partial(
 async def delete_post(post_id: int, db: Annotated[AsyncSession, Depends(get_db)]):
     result = await db.execute(
         select(models.Post)
-        .options(selectinload(models.Post.author))
+        .options(selectinload(models.Post.author), selectinload(models.Post.tags))
         .where(models.Post.id == post_id)
     )
     post = result.scalars().first()
@@ -295,14 +297,16 @@ async def create_post(post: PostCreate, db: Annotated[AsyncSession, Depends(get_
     )
     db.add(new_post)
     await db.commit()
-    await db.refresh(new_post, attribute_names=["author"])
+    await db.refresh(new_post, attribute_names=["author", "tags"])
     return new_post
 
 
 @app.get("/api/posts", response_model=list[PostResponse])
 async def get_posts(db: Annotated[AsyncSession, Depends(get_db)]):
     result = await db.execute(
-        select(models.Post).options(selectinload(models.Post.author))
+        select(models.Post).options(
+            selectinload(models.Post.author), selectinload(models.Post.tags)
+        )
     )
     posts = result.scalars().all()
     return posts

@@ -1,10 +1,10 @@
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
-SQLACLHEMY_DB_URL = "sqlite+aiosqlite:///./app.db"
+SQLALCHEMY_DB_URL = "sqlite+aiosqlite:///./app.db"
 
 engine = create_async_engine(
-    SQLACLHEMY_DB_URL,
+    SQLALCHEMY_DB_URL,
     connect_args={"check_same_thread": False},
 )
 
