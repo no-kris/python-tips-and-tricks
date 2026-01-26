@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 import models
+from crud.users import get_user_by_email, get_user_by_id, get_user_by_username
 from database import get_db
 from schemas import PostResponse, UserCreate, UserResponse, UserUpdate
 
@@ -15,19 +16,13 @@ router = APIRouter()
 @router.post("", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserCreate, db: Annotated[AsyncSession, Depends(get_db)]):
     # Check if username already exists
-    result = await db.execute(
-        select(models.User).where(models.User.username == user.username),
-    )
-    existing_user = result.scalars().first()
+    existing_user = await get_user_by_username(user.username, db)
     if existing_user:
         raise HTTPException(
             status.HTTP_400_BAD_REQUEST, detail="Username already exists."
         )
     # Check if email already exists
-    result = await db.execute(
-        select(models.User).where(models.User.email == user.email),
-    )
-    existing_email = result.scalars().first()
+    existing_email = await get_user_by_email(user.email, db)
     if existing_email:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Email already exists.")
     # Create user
@@ -40,8 +35,7 @@ async def create_user(user: UserCreate, db: Annotated[AsyncSession, Depends(get_
 
 @router.get("/{user_id}", response_model=UserResponse)
 async def get_user(user_id: int, db: Annotated[AsyncSession, Depends(get_db)]):
-    result = await db.execute(select(models.User).where(models.User.id == user_id))
-    user = result.scalars().first()
+    user = await get_user_by_id(user_id, db)
     if not user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Could not find user.")
     return user
@@ -49,8 +43,7 @@ async def get_user(user_id: int, db: Annotated[AsyncSession, Depends(get_db)]):
 
 @router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_user(user_id: int, db: Annotated[AsyncSession, Depends(get_db)]):
-    result = await db.execute(select(models.User).where(models.User.id == user_id))
-    user = result.scalars().first()
+    user = await get_user_by_id(user_id, db)
     if not user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not found")
     await db.delete(user)
@@ -61,26 +54,19 @@ async def delete_user(user_id: int, db: Annotated[AsyncSession, Depends(get_db)]
 async def update_user(
     user_id: int, user_update: UserUpdate, db: Annotated[AsyncSession, Depends(get_db)]
 ):
-    result = await db.execute(select(models.User).where(models.User.id == user_id))
-    user = result.scalars().first()
+    user = await get_user_by_id(user_id, db)
     if not user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not found.")
     # Check if username is not empty and it's not already taken,
     if user_update.username is not None and user_update.username != user.username:
-        result = await db.execute(
-            select(models.User).where(models.User.username == user_update.username)
-        )
-        existing_user = result.scalars().first()
+        existing_user = await get_user_by_username(user_update.username, db)
         if existing_user:
             raise HTTPException(
                 status.HTTP_400_BAD_REQUEST, detail="Username already taken."
             )
     # Check if email is not empty and that it's not already in use.
     if user_update.email is not None and user_update.email != user.email:
-        result = await db.execute(
-            select(models.User).where(models.User.email == user_update.email)
-        )
-        existing_email = result.scalars().first()
+        existing_email = await get_user_by_email(user_update.email, db)
         if existing_email:
             raise HTTPException(
                 status.HTTP_400_BAD_REQUEST, detail="Email is already in use."
@@ -95,8 +81,7 @@ async def update_user(
 
 @router.get("/{user_id}/posts", response_model=list[PostResponse])
 async def get_user_posts(user_id: int, db: Annotated[AsyncSession, Depends(get_db)]):
-    result = await db.execute(select(models.User).where(models.User.id == user_id))
-    user = result.scalars().first()
+    user = await get_user_by_id(user_id, db)
     if not user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="User not found.")
     result = await db.execute(

@@ -54,6 +54,15 @@ class PostUpdate(BaseModel):
     title: str | None = Field(default=None, min_length=2, max_length=100)
     content: str | None = Field(default=None, min_length=2)
     level: Level | None
+    category: Category | None = None
+    tags: list[Tags] | None
+
+    @field_validator("tags", mode="before")
+    @classmethod
+    def transform_tags_from_String(cls, value):
+        if isinstance(value, list) and len(value) > 0:
+            return [Tags(tag) for tag in value]
+        return value
 
 
 class PostResponse(PostBase):
