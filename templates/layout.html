@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-      {% if title %} 
-      Python Tips & Tricks - {{ title }} 
-      {% else %} 
-      Python Tips & Tricks 
+      {% if title %}
+      Python Tips & Tricks - {{ title }}
+      {% else %}
+      Python Tips & Tricks
       {% endif %}
     </title>
     <meta name="description" content="Articles about Python programming tips">
@@ -51,7 +51,7 @@
   <body>
     <main class="d-flex flex-column">
       {% block error %}{% endblock error %}
-        
+
         <section class="main-content px-6">
             {% block content %}
             {% endblock content %}
